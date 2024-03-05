@@ -13,11 +13,13 @@ public class Main {
         Sin sin = new Sin();
         Cos cos = new Cos(sin);
         Tg tg = new Tg(sin, cos);
+        Func func = new Func();
 
         System.out.println(ln.calc(23, 80));
         System.out.println(log.calc(23, 10, 50));
         System.out.println(sin.calc(23, 20));
         System.out.println(cos.calc(23, 20));
         System.out.println(tg.calc(23, 20));
+        System.out.println(func.calc(-Math.PI/2, 80));
     }
 }

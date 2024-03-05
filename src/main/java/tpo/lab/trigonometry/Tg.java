@@ -18,6 +18,20 @@ public class Tg {
         if (x == Double.POSITIVE_INFINITY || x == Double.NEGATIVE_INFINITY) {
             return Double.NaN;
         }
+        x = castVariable(x);
+        if (x == Math.PI/2 || x == 3 * Math.PI/2) {
+            return Double.NaN;
+        }
         return sin.calc(x, n)/cos.calc(x, n);
+    }
+
+    private double castVariable(double x) {
+        while (x > 0) {
+            x -= 2 * Math.PI;
+        }
+        while (x < 0) {
+            x += 2 * Math.PI;
+        }
+        return x;
     }
 }
