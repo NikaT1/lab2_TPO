@@ -4,27 +4,30 @@ import tpo.lab.logarithms.Ln;
 import tpo.lab.logarithms.Log;
 import tpo.lab.trigonometry.Tg;
 
-public class Func {
-    private final Log log;
+public class Func implements Functions {
+    private final Log log5;
+    private final Log log10;
     private final Tg tg;
     private final Ln ln;
 
     public Func() {
         this.tg = new Tg();
         this.ln = new Ln();
-        this.log = new Log(ln);
+        this.log5 = new Log(5);
+        this.log10 = new Log(10);
     }
 
-    public Func(Tg tg, Ln ln, Log log) {
+    public Func(Log log5, Log log10, Tg tg) {
+        this.log5 = log5;
+        this.log10 = log10;
         this.tg = tg;
-        this.log = log;
-        this.ln = ln;
+        this.ln = new Ln();
     }
 
-    public double calc(double x, int n) {
-        if (x <= 0) return tg.calc(x, n);
+    public double calc(double x, double accuracy) {
+        if (x <= 0) return tg.calc(x, accuracy);
         else
-            return (((Math.pow((log.calc(x, 10, n)), 3) / ln.calc(x, n)) * log.calc(x, 5, n)) + (log.calc(x, 10, n) / Math.pow(log.calc(x, 5, n), 3))) + (log.calc(x, 5, n) + log.calc(x, 5, n));
+            return (((Math.pow(log10.calc(x, accuracy), 3) / ln.calc(x, accuracy)) * log5.calc(x, accuracy)) + (log10.calc(x, accuracy) / Math.pow(log5.calc(x, accuracy), 3))) + (log5.calc(x, accuracy) + log5.calc(x, accuracy));
     }
 
 }

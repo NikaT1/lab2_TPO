@@ -1,7 +1,7 @@
 package tpo.lab.logarithms;
 
-public class Ln {
-    public double calc(double x, int n) {
+public class Ln implements LogarithmFunctions {
+    public double calc(double x, double accuarcy) {
         if (Double.isNaN(x) || x < 0) {
             return Double.NaN;
         } else if (x == Double.POSITIVE_INFINITY) {
@@ -12,9 +12,14 @@ public class Ln {
         double y = (x - 1)/(x + 1);
         double numerator = y;
         double ans = 0;
-        for (int i = 1; i <= n; i+=2) {
+        double prevAns = -1;
+        int i = 1;
+        while (Math.abs(ans - prevAns) > accuarcy) {
+            prevAns = ans;
             ans += numerator / i;
             numerator *= y * y;
+            i += 2;
+
         }
         return 2*ans;
     }

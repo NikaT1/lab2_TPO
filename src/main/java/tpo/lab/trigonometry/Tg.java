@@ -1,6 +1,6 @@
 package tpo.lab.trigonometry;
 
-public class Tg {
+public class Tg implements TrigonometryFunctions {
     private final Sin sin;
     private final Cos cos;
 
@@ -14,24 +14,8 @@ public class Tg {
         this.cos = cos;
     }
 
-    public double calc(double x, int n) {
-        if (x == Double.POSITIVE_INFINITY || x == Double.NEGATIVE_INFINITY) {
-            return Double.NaN;
-        }
-        x = castVariable(x);
-        if (x == Math.PI/2 || x == 3 * Math.PI/2) {
-            return Double.NaN;
-        }
-        return sin.calc(x, n)/cos.calc(x, n);
+    public double calc(double x, double accuracy) {
+        return sin.calc(x, accuracy) / cos.calc(x, accuracy);
     }
 
-    private double castVariable(double x) {
-        while (x > 0) {
-            x -= 2 * Math.PI;
-        }
-        while (x < 0) {
-            x += 2 * Math.PI;
-        }
-        return x;
-    }
 }

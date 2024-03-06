@@ -1,6 +1,6 @@
 package tpo.lab.trigonometry;
 
-public class Cos {
+public class Cos implements TrigonometryFunctions {
     private final Sin sin;
 
     public Cos(Sin sin) {
@@ -11,16 +11,13 @@ public class Cos {
         sin = new Sin();
     }
 
-    public double calc(double x, int n) {
-        if (x == Double.POSITIVE_INFINITY || x == Double.NEGATIVE_INFINITY) {
-            return Double.NaN;
-        }
-        double ans = 0;
-        x = castVariable(x);
-        if (Math.PI / 2 <= x && 3 * Math.PI / 2 >= x) {
-            ans = -Math.sqrt(1 - Math.pow(sin.calc(x, n), 2));
+    public double calc(double x, double accuracy) {
+        double ans;
+        double cast = castVariable(x);
+        if (Math.PI / 2 <= cast && 3 * Math.PI / 2 >= cast) {
+            ans = -Math.sqrt(1 - Math.pow(sin.calc(x, accuracy), 2));
         } else {
-            ans = Math.sqrt(1 - Math.pow(sin.calc(x, n), 2));
+            ans = Math.sqrt(1 - Math.pow(sin.calc(x, accuracy), 2));
         }
         return ans;
     }
