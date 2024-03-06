@@ -23,6 +23,7 @@ public class CosTest {
     @BeforeAll
     public static void setUpAll() throws IOException {
         Path cosPath = Path.of("src/test/resources/testData/testCos.csv");
+
         Path dataPath = Path.of("src/test/resources/testData/testFunNegative.csv");
         CSVParser parser = CSVFormat.DEFAULT.builder()
                 .setSkipHeaderRecord(true)
