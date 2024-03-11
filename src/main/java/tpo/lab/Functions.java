@@ -13,29 +13,25 @@ public interface Functions {
         return calc(x, ACCURACY);
     }
 
-    default List<Double> calc(List<Double> x, Path path) {
-        List<Double> res = x.stream().map(
-                el -> calc(el, ACCURACY)
-        ).toList();
-        writeCsvFile(x, res, path);
+    default double calc(double x, CSVPrinter printer) {
+        double res = calc(x, ACCURACY);
+        writeCsvFile(x, res, printer);
         return res;
     }
 
-    private void writeCsvFile(List<Double> x, List<Double> res, Path path) {
-        try (CSVPrinter printer = CSVFormat.DEFAULT.builder().setHeader(new String[]{"X", "Результаты модуля (X)"}).build().print(path, java.nio.charset.StandardCharsets.UTF_8)) {
+    private void writeCsvFile(double x, double res, CSVPrinter printer) {
+        try {
             printer.printRecord(x, res);
         } catch (IOException e) {
-            System.out.println("Wrong filename");
+            System.out.println("Error during printing record");
         }
     }
 
     double calc(double x, double accuracy);
 
-    default List<Double> calc(List<Double> x, double accuracy, Path path) {
-        List<Double> res = x.stream().map(
-                el -> calc(el, accuracy)
-        ).toList();
-        writeCsvFile(x, res, path);
+    default double calc(double x, double accuracy, CSVPrinter printer) {
+        double res = calc(x, accuracy);
+        writeCsvFile(x, res, printer);
         return res;
     }
 }

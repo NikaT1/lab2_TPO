@@ -1,5 +1,8 @@
 package tpo.lab.integration_tests;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import tpo.lab.Func;
@@ -9,12 +12,29 @@ import tpo.lab.trigonometry.Cos;
 import tpo.lab.trigonometry.Sin;
 import tpo.lab.trigonometry.Tg;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import static java.lang.Math.abs;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FuncIntTest {
-    private static final Sin sin = new Sin();
+    private final Sin sin = new Sin();
+
     private final Ln ln = new Ln();
+
+    private static CSVPrinter printer;
+
+    private static final Path funcPath = Path.of("src/test/resources/outData/Func.csv");
+
+    @BeforeAll
+    public static void setUp(){
+        try {
+            printer = CSVFormat.DEFAULT.builder().setHeader(new String[]{"X", "Результаты модуля (X)"}).build().print(funcPath, java.nio.charset.StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Wrong filename");
+        }
+    }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/testData/testCos.csv")
@@ -59,7 +79,7 @@ public class FuncIntTest {
         Log log10 = new Log(ln, 10);
         Log log5 = new Log(ln, 5);
         Tg tg = new Tg(sin, new Cos(sin));
-        Double actual = new Func(log5, log10, tg).calc(x);
+        Double actual = new Func(log5, log10, tg).calc(x, printer);
         assertEquals(expected, actual, 0.2*abs(x));
     }
 }
