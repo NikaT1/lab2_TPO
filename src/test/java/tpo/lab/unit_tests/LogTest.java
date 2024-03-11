@@ -1,4 +1,4 @@
-package tpo.lab.integration;
+package tpo.lab.unit_tests;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LogTest {
     private static final Ln lnMock = Mockito.mock(Ln.class);
-    private static final Ln ln = new Ln();
 
     @BeforeAll
     public static void setUpAll() throws IOException {
@@ -40,15 +39,15 @@ public class LogTest {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                Mockito.when(lnMock.calc(x, 0.00001)).thenReturn(ln.calc(x));
+                Mockito.when(lnMock.calc(x, 0.00001)).thenReturn(Math.log(x));
 
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        Mockito.when(lnMock.calc(5, 0.00001)).thenReturn(ln.calc(5));
-        Mockito.when(lnMock.calc(10, 0.00001)).thenReturn(ln.calc(10));
+        Mockito.when(lnMock.calc(5, 0.00001)).thenReturn(Math.log(5));
+        Mockito.when(lnMock.calc(10, 0.00001)).thenReturn(Math.log(10));
 
 
     }

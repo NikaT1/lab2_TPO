@@ -1,4 +1,4 @@
-package tpo.lab.integration;
+package tpo.lab.unit_tests;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TgTest {
     private static final Sin sinMock = Mockito.mock(Sin.class);
     private static final Cos cosMock = Mockito.mock(Cos.class);
-    private static final Sin sin = new Sin();
-    private static final Cos cos = new Cos();
 
     @BeforeAll
     public static void setUpAll() throws IOException {
@@ -40,8 +38,8 @@ public class TgTest {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                Mockito.when(sinMock.calc(x, 0.00001)).thenReturn(sin.calc(x));
-                Mockito.when(cosMock.calc(x, 0.00001)).thenReturn(cos.calc(x));
+                Mockito.when(sinMock.calc(x, 0.00001)).thenReturn(Math.sin(x));
+                Mockito.when(cosMock.calc(x, 0.00001)).thenReturn(Math.cos(x));
 
             });
         } catch (IOException e) {

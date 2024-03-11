@@ -1,4 +1,4 @@
-package tpo.lab.integration;
+package tpo.lab.unit_tests;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,15 +18,10 @@ import tpo.lab.trigonometry.Tg;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FuncIntTest {
+public class FuncTest {
     private static final Log log5Mock = Mockito.mock(Log.class);
     private static final Log log10Mock = Mockito.mock(Log.class);
     private static final Tg tgMock = Mockito.mock(Tg.class);
-    private final Ln lnMock = Mockito.mock(Ln.class);
-    private static final Log log5 = new Log(5);
-    private static final Log log10 = new Log(10);
-    private static final Tg tg = new Tg();
-    private final Ln ln = new Ln();
 
     public static double log5(double x) {
         return Math.log(x) / Math.log(5);
@@ -54,7 +49,7 @@ public class FuncIntTest {
         ) {
             negParser.getRecords().forEach(record -> {
                 double x = Double.parseDouble(record.get(0));
-                Mockito.when(tgMock.calc(x, 0.00001)).thenReturn(tg.calc(x));
+                Mockito.when(tgMock.calc(x, 0.00001)).thenReturn(Math.tan(x));
                 try {
                     printer5.printRecord(x, Math.tan(x));
                 } catch (IOException e) {
@@ -63,8 +58,8 @@ public class FuncIntTest {
             });
             posParser.getRecords().forEach(record -> {
                 double x = Double.parseDouble(record.get(0));
-                Mockito.when(log5Mock.calc(x, 0.00001)).thenReturn(log5.calc(x, 0.00001));
-                Mockito.when(log10Mock.calc(x, 0.00001)).thenReturn(log10.calc(x, 0.00001));
+                Mockito.when(log5Mock.calc(x, 0.00001)).thenReturn(log5(x));
+                Mockito.when(log10Mock.calc(x, 0.00001)).thenReturn(Math.log10(x));
                 try {
                     printer5.printRecord(x, func(x));
                 } catch (IOException e) {

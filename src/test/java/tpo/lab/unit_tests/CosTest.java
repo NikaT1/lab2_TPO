@@ -1,4 +1,4 @@
-package tpo.lab.integration;
+package tpo.lab.unit_tests;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,13 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CosTest {
     private static final Sin sinMock = Mockito.mock(Sin.class);
-    private static final Sin sin = new Sin();
 
     @BeforeAll
     public static void setUpAll() throws IOException {
         Path cosPath = Path.of("src/test/resources/testData/testCos.csv");
 
-        Path dataPath = Path.of("src/test/resources/testData/testFunNegative.csv");
+        Path dataPath = Path.of("src/test/resources/testData/testFuncPos.csv");
         CSVParser parser = CSVFormat.DEFAULT.builder()
                 .setSkipHeaderRecord(true)
                 .build().parse(new FileReader(dataPath.toFile()));
@@ -37,7 +36,7 @@ public class CosTest {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                Mockito.when(sinMock.calc(x, 0.00001)).thenReturn(sin.calc(x));
+                Mockito.when(sinMock.calc(x, 0.00001)).thenReturn(Math.sin(x));
 
             });
         } catch (IOException e) {
